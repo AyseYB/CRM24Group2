@@ -48,31 +48,49 @@ public abstract class AbstractBaseTest {
     @BeforeMethod
     public void setup(){
         driver = Driver.getDriver();
-        driver.get(ConfigurationReader.getProperty("url"));
+        driver.get(ConfigurationReader.getProperty("environment"));
         driver.manage().window().maximize();
     }
 
-
     @AfterMethod
-    public void teardown(ITestResult testResult){
-        if (testResult.getStatus() == ITestResult.FAILURE){
-            String screenshotLocation = BrowserUtils.getScreenshot(testResult.getName());
-            try {
-                extentTest.fail(testResult.getName());
-                extentTest.addScreenCaptureFromPath(screenshotLocation);
-                extentTest.fail(testResult.getThrowable());
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Failed to attach screenshot");
-            }
-        }else if (testResult.getStatus() == ITestResult.SUCCESS){
-            extentTest.pass(testResult.getName());
-        }else if (testResult.getStatus() == ITestResult.SKIP){
-            extentTest.skip(testResult.getName());
+    public void teardown(ITestResult iTestResult) throws IOException {
+        //ITestResult class describes the result of a test.
+        //if test failed, take a screenshot
+        //no failure - no screenshot
+        if (iTestResult.getStatus() == ITestResult.FAILURE) {
+            //screenshot will have a name of the test
+           // String screenshotPath = BrowserUtils.getScreenShot(iTestResult.getName());
+            extentTest.fail(iTestResult.getName());//attach test name that failed
+            BrowserUtils.wait(4);
+          //  ExtentTest.addScreenCaptureFromPath(screenshotPath, "Failed");//attach screenshot
+            extentTest.fail(iTestResult.getThrowable());//attach console output
         }
-        BrowserUtils.wait(3);
+        BrowserUtils.wait(1);
         Driver.closeDriver();
     }
+
+
+//    @AfterMethod
+//    public void teardown(ITestResult testResult){
+//        if (testResult.getStatus() == ITestResult.FAILURE){
+//            String screenshotLocation = BrowserUtils.getScreenshot(testResult.getName());
+//            try {
+//                extentTest.fail(testResult.getName());
+//                extentTest.addScreenCaptureFromPath(screenshotLocation);
+//                extentTest.fail(testResult.getThrowable());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                throw new RuntimeException("Failed to attach screenshot");
+//            }
+//        }else if (testResult.getStatus() == ITestResult.SUCCESS){
+//            extentTest.pass(testResult.getName());
+//        }else if (testResult.getStatus() == ITestResult.SKIP){
+//            extentTest.skip(testResult.getName());
+//        }
+//        BrowserUtils.wait(3);
+//        Driver.closeDriver();
+//    }
+
 
 
 }
