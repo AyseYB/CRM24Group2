@@ -1,6 +1,7 @@
 package com.automation.tests;
 import com.automation.pages.LoginPage;
 import com.automation.pages.UserStory11_Downloading;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class UserStory11_DownloadingTest extends AbstractBaseTest {
@@ -11,6 +12,9 @@ public class UserStory11_DownloadingTest extends AbstractBaseTest {
         loginPage.login();
         UserStory11_Downloading userStory11_downloading = new UserStory11_Downloading();
         userStory11_downloading.clickToMacOS();
+
+
+
     }
 
     @Test

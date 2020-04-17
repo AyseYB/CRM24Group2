@@ -1,10 +1,15 @@
 package com.automation.pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class UserStory11_Downloading extends AbstractBasePage {
+
+    public UserStory11_Downloading(){
+        PageFactory.initElements(driver, this);
+    }
 
     @FindBy(xpath = "//span[text()='Mac OS']")
     private WebElement MacOS;
